@@ -13,6 +13,10 @@ const {
 export default Service.extend({
   api: intercom,
 
+  _userIdProp: computed('config.userProperties.userIdProp', function() {
+    return get(this, `user.${get(this, 'config.userProperties.userIdProp')}`);
+  }),
+
   _userNameProp: computed('config.userProperties.nameProp', function() {
     return get(this, `user.${get(this, 'config.userProperties.nameProp')}`);
   }),
@@ -27,7 +31,8 @@ export default Service.extend({
 
   user: {
     name: null,
-    email: null
+    email: null,
+    user_id: null
   },
 
   _hasUserContext: computed('user', '_userNameProp', '_userEmailProp', '_userCreatedAtProp', function() {
@@ -47,6 +52,7 @@ export default Service.extend({
     if (get(this, '_hasUserContext')) {
       obj.name = get(this, '_userNameProp');
       obj.email = get(this, '_userEmailProp');
+      obj.user_id = get(this, '_userIdProp');
       if (get(this, '_userCreatedAtProp')) {
         // eslint-disable-next-line
         obj.created_at = get(this, '_userCreatedAtProp');
