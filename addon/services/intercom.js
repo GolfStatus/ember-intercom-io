@@ -3,7 +3,7 @@ import intercom from 'intercom';
 
 const {
   get,
-  merge,
+  assign,
   Service,
   computed,
   assert,
@@ -62,7 +62,7 @@ export default Service.extend({
   }),
 
   start(bootConfig = {}) {
-    let _bootConfig = merge(get(this, '_intercomBootConfig'), bootConfig);
+    let _bootConfig = assign(get(this, '_intercomBootConfig'), bootConfig);
     scheduleOnce('afterRender', () => this.get('api')('boot', _bootConfig));
   },
 
